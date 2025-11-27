@@ -3,6 +3,7 @@ import { useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import Navbar from './components/layout/Navbar';
 
 // Creamos un "Dashboard" simple por ahora
 function Dashboard() {
@@ -29,7 +30,7 @@ function Dashboard() {
 function App() {
     return (
         <div className="App">
-            {/* (Puedes poner un Navbar aquí) */}
+            
             
             <Routes>
                 {/* --- Rutas Públicas --- */}
@@ -39,7 +40,7 @@ function App() {
                 {/* --- Rutas Privadas --- */}
                 <Route element={<ProtectedRoute />}>
                     {/* Todo lo que esté aquí adentro, estará protegido */}
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/dashboard" element={<Navbar />} />
                     {/* <Route path="/tareas" element={<TuComponenteDeTareas />} /> */}
                 </Route>
                 
