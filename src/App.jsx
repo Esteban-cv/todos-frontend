@@ -1,47 +1,22 @@
-import { Routes, Route, Link } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
+import { Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import Dashboard from './pages/Dashboard';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import Navbar from './components/layout/Navbar';
-
-// Creamos un "Dashboard" simple por ahora
-function Dashboard() {
-    const { logout } = useAuth();
-    return (
-        <div className="container mt-5">
-            <div className="row">
-                <div className="col-12">
-                    <div className="card shadow">
-                        <div className="card-body text-center p-5">
-                            <h1 className="display-4 mb-4">¡Bienvenido! 🎉</h1>
-                            <p className="lead mb-4">Estás logueado exitosamente</p>
-                            <button onClick={logout} className="btn btn-danger">
-                                Cerrar Sesión
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
+import Layout from './components/layout/layout';
 
 function App() {
     return (
         <div className="App">
-            
-            
             <Routes>
                 {/* --- Rutas Públicas --- */}
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
 
-                {/* --- Rutas Privadas --- */}
+                {/* --- Rutas Privadas (con Layout: Navbar + Header + Footer) --- */}
                 <Route element={<ProtectedRoute />}>
-                    {/* Todo lo que esté aquí adentro, estará protegido */}
-                    <Route path="/dashboard" element={<Navbar />} />
-                    {/* <Route path="/tareas" element={<TuComponenteDeTareas />} /> */}
+                    <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
+                    {/* <Route path="/tareas" element={<Layout><TuComponenteDeTareas /></Layout>} /> */}
                 </Route>
                 
                 {/* (Ruta para 404) */}

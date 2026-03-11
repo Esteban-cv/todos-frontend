@@ -1,56 +1,104 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import '../../css/Sidebar.css';
-import '../../css/custom.css';
-import { BiTachometer, BiPlusCircle, BiCog, BiSearch } from "react-icons/bi";
-import logo from '../../assets/images/Logo.png'
+import { BiTachometer, BiPlusCircle, BiCog, BiMenu, BiLogOut } from 'react-icons/bi';
+import logo from '../../assets/images/Logo.png';
 
 function Navbar() {
     const { logout } = useAuth();
+    const location = useLocation();
+
+    const isActive = (path) => location.pathname === path ? 'active' : '';
+
+    const navItems = [
+        { to: '/dashboard', icon: BiTachometer, label: 'Dashboard' },
+        { to: '/create-task', icon: BiPlusCircle, label: 'Nueva Tarea' },
+        { to: '/settings', icon: BiCog, label: 'Configuración' },
+    ];
+
     return (
-        <nav className="sidebar p-3">
-            {/* Título / Marca */}
-            <div className="d-flex justify-content-center align-items-center">
-                <img className='logo' src={logo} alt="logo" />
-            </div>
+        <>
+            {/* Botón hamburguesa — solo visible en < lg */}
+            <button
+                className="btn d-lg-none position-fixed top-0 start-0 m-2 rounded-3 shadow-sm"
+                style={{ zIndex: 1060, backgroundColor: 'var(--hl-primary)', color: 'white' }}
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#sidebarNav"
+                aria-controls="sidebarNav"
+            >
+                <BiMenu size={22} />
+            </button>
 
-            {/* Menú de Navegación (Pills verticales) */}
-            <ul className="nav nav-pills flex-column mb-auto">
-                <li className="nav-item mb-2">
-                    <Link to="/dashboard" className="nav-link link-light">
-                        <BiTachometer className="me-2 fs-5" />
-                        Dashboard
-                    </Link>
-                </li>
-                <li className="nav-item mb-2">
-                    <Link to="/create-task" className="nav-link link-light">
-                        <BiPlusCircle className="me-2 fs-5" />
-                        Nueva Tarea
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/settings" className="nav-link link-light">
-                    <BiCog className="me-2 fs-5" />
-                        Configuración
-                    </Link>
-                </li>
-            </ul>
-
-            {/* Formulario de búsqueda al final o perfil */}
-            <hr />
-            <form className="d-flex flex-column" role="search">
-                <div className="input-group mb-2">
-                    <span className="input-group-text"><BiSearch /></span>
-                    <input className="form-control" type="search" placeholder="Buscar..." aria-label="Search" />
+            {/* Sidebar fijo en desktop, offcanvas en móvil */}
+            <div
+                className="sidebar offcanvas-lg offcanvas-start d-flex flex-column p-0"
+                style={{
+                    width: '260px',
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    height: '100vh',
+                    zIndex: 1045,
+                }}
+                tabIndex="-1"
+                id="sidebarNav"
+                aria-labelledby="sidebarNavLabel"
+            >
+                {/* Header del offcanvas (solo móvil) */}
+                <div className="offcanvas-header d-lg-none px-3 pt-3 pb-0">
+                    <h6 className="offcanvas-title fw-semibold" id="sidebarNavLabel">Menú</h6>
+                    <button
+                        type="button"
+                        className="btn-close btn-sm"
+                        data-bs-dismiss="offcanvas"
+                        data-bs-target="#sidebarNav"
+                        aria-label="Cerrar"
+                    ></button>
                 </div>
-                <button className="btn btn-info w-100" type="submit">Buscar</button>
-            </form>
 
-            {/* Opcional: Botón de Logout */}
-            <div className="d-flex flex-column my-2">
-                <button className='btn btn-warning' onClick={logout}>Cerrar Sesión</button>
+                {/* Logo de la app */}
+                <div className="sidebar-logo-wrapper text-center">
+                    <img
+                        src={logo}
+                        alt="HacerList"
+                        className="img-fluid"
+                        style={{ width: '140px', height: '80px', objectFit: 'contain', filter: 'drop-shadow(0 2px 6px rgba(79,70,229,0.15))' }}
+                    />
+                </div>
+
+                {/* Navegación */}
+                <nav className="px-3 py-2 flex-grow-1">
+                    <p className="sidebar-section-label">Menú</p>
+                    <ul className="nav flex-column gap-1">
+                        {navItems.map((item) => (
+                            <li className="nav-item" key={item.to}>
+                                <Link
+                                    to={item.to}
+                                    className={`sidebar-nav-link ${isActive(item.to)}`}
+                                    data-bs-dismiss="offcanvas"
+                                    data-bs-target="#sidebarNav"
+                                >
+                                    <item.icon size={19} />
+                                    {item.label}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+
+                {/* Cerrar sesión — pegado abajo */}
+                <div className="px-3 pb-3 mt-auto">
+                    <hr className="my-2" style={{ borderColor: 'var(--hl-border)' }} />
+                    <button
+                        className="btn btn-sm w-100 d-flex align-items-center justify-content-center gap-2 py-2 border-0 sidebar-logout-btn"
+                        onClick={logout}
+                    >
+                        <BiLogOut size={18} />
+                        Cerrar Sesión
+                    </button>
+                </div>
             </div>
-        </nav>
+        </>
     );
 }
 

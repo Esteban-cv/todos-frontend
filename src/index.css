@@ -1,15 +1,167 @@
+/* ===== HacerList — Design System ===== */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --hl-primary: #4F46E5;
+  --hl-primary-hover: #4338CA;
+  --hl-primary-light: #EEF2FF;
+  --hl-accent: #10B981;
+  --hl-accent-hover: #059669;
+  --hl-sidebar: #1E293B;
+  --hl-sidebar-active: #334155;
+  --hl-text: #1E293B;
+  --hl-muted: #64748B;
+  --hl-bg: #F1F5F9;
+  --hl-border: #E2E8F0;
+  --hl-danger: #EF4444;
+  --hl-warning: #F59E0B;
+  --hl-radius: 0.75rem;
 }
 
 body {
   margin: 0;
-  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--hl-text);
+}
+
+/* Brand button */
+.btn-hl {
+  background-color: var(--hl-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--hl-radius);
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-hl:hover,
+.btn-hl:focus {
+  background-color: var(--hl-primary-hover);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+}
+
+/* Accent button */
+.btn-hl-accent {
+  background-color: var(--hl-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--hl-radius);
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-hl-accent:hover,
+.btn-hl-accent:focus {
+  background-color: var(--hl-accent-hover);
+  color: #fff;
+}
+
+/* Outline ghost button */
+.btn-hl-ghost {
+  background: transparent;
+  color: var(--hl-primary);
+  border: 2px solid var(--hl-primary);
+  border-radius: var(--hl-radius);
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-hl-ghost:hover {
+  background-color: var(--hl-primary);
+  color: #fff;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  background: #ffffff;
+  border-right: 1px solid var(--hl-border);
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.04);
+}
+
+.sidebar-logo-wrapper {
+  padding: 1.4rem 1.2rem 1rem;
+  margin: 0.8rem 0.75rem 0;
+  background: linear-gradient(135deg, var(--hl-primary-light) 0%, #f0f4ff 100%);
+  border-radius: var(--hl-radius);
+  border: 1px solid rgba(79, 70, 229, 0.08);
+}
+
+.sidebar-section-label {
+  color: var(--hl-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Nav links */
+.sidebar-nav-link {
+  color: var(--hl-text);
+  border-radius: 0.6rem;
+  padding: 0.55rem 0.85rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background 0.15s ease, color 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  position: relative;
+}
+
+.sidebar-nav-link:hover {
+  background-color: var(--hl-primary-light);
+  color: var(--hl-primary);
+}
+
+.sidebar-nav-link.active {
+  background-color: var(--hl-primary-light);
+  color: var(--hl-primary);
+  font-weight: 600;
+}
+
+.sidebar-nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  border-radius: 0 4px 4px 0;
+  background: var(--hl-primary);
+}
+
+/* Smooth inputs */
+.form-control:focus {
+  border-color: var(--hl-primary);
+  box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.15);
+}
+
+/* Sidebar logout button */
+.sidebar-logout-btn {
+  background-color: var(--hl-danger);
+  color: #fff;
+  border-radius: var(--hl-radius);
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all 0.2s;
+}
+
+.sidebar-logout-btn:hover {
+  background-color: #dc2626;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}
+
+/* Responsive: en móvil el contenido no tiene margin-left */
+@media (max-width: 991.98px) {
+  .layout-content {
+    margin-left: 0 !important;
+  }
 }
